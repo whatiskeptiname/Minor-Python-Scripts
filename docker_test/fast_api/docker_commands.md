@@ -60,4 +60,6 @@
 
 ## Run container with volume
 
-    docker run -it -p <port_number_local>:<port_number_docker> --name <container_name> --mount source=<volume_name>,target=./app
+    docer run -it -p <port_number_local>:<port_number_docker> -v <full_path_of_local_directory>:<WORKDIR_path> <image_name>
+
+    docker run -it -p 8000:8000 -v "$(pwd)/app/":/app/ fastapi
