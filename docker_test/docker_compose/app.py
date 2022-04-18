@@ -1,25 +1,23 @@
-import time
-
 import redis
-from flask import Flask
+from flask import Flask, session
 
 app = Flask(__name__)
-cache = redis.Redis(host="redis", port=6379)
 
+app.secret_key = "GENERATE_A_SECRET_THEN_PLACE_HERE"
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr("hits")
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
+# Configure Redis for storing the session data on the server-side
+app.config["SESSION_TYPE"] = "redis"
+app.config["SESSION_REDIS"] = redis.from_url("redis://localhost:6379")
 
 
 @app.route("/")
 def hello():
-    count = get_hit_count()
-    return f"Hello you! I have seen you {count} times.\n"
+    if "code" in session:
+        return "Hello %s!" % session["code"]
+    session["code"] = "again!!!"
+
+    return "Hello"
+
+
+if __name__ == "__main__":
+    app.run()
