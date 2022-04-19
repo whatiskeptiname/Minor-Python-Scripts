@@ -16,3 +16,7 @@ def get_universities():
     search = request.args.get("country")
     r = requests.get(f"{API_URL}{search}")
     return jsonify(r.json())
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000, host="0.0.0.0")
