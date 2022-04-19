@@ -5,3 +5,5 @@ Cache implementation using redis. Gets the data from the cache if it exists, oth
 ``` url: http://127.0.0.1:5000/universities?country=Nepal ```
 
 Returns a list of universities in specified country.
+
+``` docker-compse up ``` to run the containers.
