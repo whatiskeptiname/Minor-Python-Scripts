@@ -1,5 +1,5 @@
 import unittest
-from lib.employee import Employee
+from src.employee import Employee
 
 # from unittest.mock import patch
 
