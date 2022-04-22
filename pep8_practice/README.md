@@ -7,7 +7,7 @@
     angle brackets, diamond brackets, cone brackets or chevrons: < > or ⟨ ⟩
 
 ## Rules:
-- Any line cant exceed 80 characters
+- Any line can't exceed 80 characters
 
 - Use four spaces for indentation
 

@@ -11,17 +11,19 @@ def do_something():
     print("Done Sleeping...")
 
 
-# Create threads
-t1 = threading.Thread(target=do_something)
-t2 = threading.Thread(target=do_something)
+# Create thread object list
+threads = []
 
-# Start threads
-t1.start()
-t2.start()
+# Create multiple threads
+for _ in range(10):
+    t = threading.Thread(target=do_something)
+    t.start()
+    threads.append(t)
 
-# Wait until threads are done
-t1.join()
-t2.join()
+# Wait for all threads to complete
+for thread in threads:
+    thread.join()
+
 
 # Get the end time
 finish = time.perf_counter()
