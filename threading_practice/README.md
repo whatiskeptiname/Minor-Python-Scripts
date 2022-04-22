@@ -3,6 +3,6 @@
 Some threading examples and a project to batch download images using thereading.
 
 ### Note: 
-    Threads are useful for IO bound tasks, but they are not very useful for CPU bound tasks.
+Threads and asyncio are useful for IO bound tasks, but they are not very useful for CPU bound tasks.
 
-    For CPU bound tasks, we can use multiprocessing.
+For CPU bound tasks, we can use multiprocessing.
