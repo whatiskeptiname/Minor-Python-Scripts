@@ -1,12 +1,21 @@
 import asyncio
+import time
 
 
-async def foo():
-    return 42
+def blocking_io():
+    print(f"start blocking_io at {time.strftime('%X')}")
+    # Note that time.sleep() can be replaced with any blocking
+    # IO-bound operation, such as file operations.
+    time.sleep(1)
+    print(f"blocking_io complete at {time.strftime('%X')}")
 
 
-task = asyncio.create_task(foo())
-done, pending = await asyncio.wait({task})
+async def main():
+    print(f"started main at {time.strftime('%X')}")
 
-if task in done:
-    print("done")
+    await asyncio.gather(asyncio.to_thread(blocking_io), asyncio.sleep(1))
+
+    print(f"finished main at {time.strftime('%X')}")
+
+
+asyncio.run(main())
