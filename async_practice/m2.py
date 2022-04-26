@@ -1,18 +1,12 @@
 import asyncio
 
 
-async def eternity():
-    # Sleep for one hour
-    await asyncio.sleep(3600)
-    print("yay!")
+async def foo():
+    return 42
 
 
-async def main():
-    # Wait for at most 1 second
-    try:
-        await asyncio.wait_for(eternity(), timeout=1.0)
-    except asyncio.TimeoutError:
-        print("timeout!")
+task = asyncio.create_task(foo())
+done, pending = await asyncio.wait({task})
 
-
-asyncio.run(main())
+if task in done:
+    print("done")
