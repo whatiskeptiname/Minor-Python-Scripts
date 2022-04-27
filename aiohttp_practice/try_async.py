@@ -16,7 +16,7 @@ async def bar():
 async def main():
 
     try:
-        results = await asyncio.gather(foo(), bar(), return_exceptions=False)
+        results = await asyncio.gather(foo(), bar())
         print(results)
     except ValueError as e:
         print(e)
