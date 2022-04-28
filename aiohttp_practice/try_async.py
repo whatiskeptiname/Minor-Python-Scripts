@@ -1,10 +1,5 @@
 import asyncio
 
-exceptions = [
-    ValueError,
-    SystemError,
-]
-
 
 async def foo(text):
     raise ValueError
@@ -30,12 +25,7 @@ async def main():
     results = await asyncio.gather(
         *[task_foo, task_faa, task_bar], return_exceptions=True
     )
-    # print(results)
-    failed_task = [
-        result if isinstance(result, Exception) else None for result in results
-    ]
-    # print(failed_task)
-    for index, error in enumerate(failed_task):
+    for index, error in enumerate(results):
         if isinstance(error, ValueError):
             print(f"value error at index {index} with parms {args[index]}")
         elif isinstance(error, SystemError):
