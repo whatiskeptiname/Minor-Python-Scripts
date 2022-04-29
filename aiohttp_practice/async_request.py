@@ -4,20 +4,25 @@ import aiohttp
 from names import names
 
 
-url = "https://api.nationalize.io?name={}"
+url = "https://httpbin.org/anything?key={}"
 results = []
 
-names = random.choices(names, k=3)
+names = random.choices(names, k=2)
 
 # Add tasks to the list
 def get_task(session):
     tasks = []
     for name in names:
-        tasks.append(asyncio.create_task(session.get(url.format(name), ssl=False)))
+        task = asyncio.create_task(
+            session.get(
+                url.format(name), headers={"Cache-Control": "no-cache"}, ssl=False
+            )
+        )
+        task.args = name
+        tasks.append(task)
     return tasks
 
 
-# main funciton run the tasks
 async def main():
     async with aiohttp.ClientSession() as session:
         tasks = get_task(session)
@@ -27,7 +32,11 @@ async def main():
             if task.exception():
                 print(str(task.exception()))
             else:
-                print(await task.result().json())
+                result = await task.result().json()
+                args = task.args
+
+                print("args: " + args + "\n", result, "\n~~~~~~~~~~~~~~~")
+
         for task in pending:
             print("pending: ", task)
 
