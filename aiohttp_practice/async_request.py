@@ -1,4 +1,5 @@
 import asyncio
+import random
 import aiohttp
 from names import names
 
@@ -6,7 +7,7 @@ from names import names
 url = "https://api.nationalize.io?name={}"
 results = []
 
-names = names[0:3]
+names = random.choices(names, k=3)
 
 # Add tasks to the list
 def get_task(session):
@@ -26,7 +27,7 @@ async def main():
             if task.exception():
                 print(str(task.exception()))
             else:
-                print(task.result())
+                print(await task.result().json())
         for task in pending:
             print("pending: ", task)
 
