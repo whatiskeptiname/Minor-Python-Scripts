@@ -1,17 +1,18 @@
 import asyncio
 import aiohttp
-from futures3 import FIRST_COMPLETED, FIRST_EXCEPTION
+from names import names
 
 
-url = "https://www.boredapi.com/api/activity"
+url = "https://api.nationalize.io?name={}"
 results = []
 
+names = names[0:3]
 
 # Add tasks to the list
 def get_task(session):
     tasks = []
-    for _ in range(9):
-        tasks.append(asyncio.create_task(session.get(url, ssl=False)))
+    for name in names:
+        tasks.append(asyncio.create_task(session.get(url.format(name), ssl=False)))
     return tasks
 
 
