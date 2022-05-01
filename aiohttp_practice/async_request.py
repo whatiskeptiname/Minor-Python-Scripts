@@ -1,5 +1,4 @@
 import asyncio
-import random
 import aiohttp
 from names import names
 
@@ -7,10 +6,9 @@ from names import names
 url = "https://httpbin.org/anything?key={}"
 results = []
 
-names = random.choices(names, k=2)
 
 # Add tasks to the list
-def get_task(session):
+def get_task(session, names):
     tasks = []
     for name in names:
         task = asyncio.create_task(
@@ -23,9 +21,9 @@ def get_task(session):
     return tasks
 
 
-async def main():
+async def collect_results(names):
     async with aiohttp.ClientSession() as session:
-        tasks = get_task(session)
+        tasks = get_task(session, names)
         done, pending = await asyncio.wait(tasks)
 
         for task in done:
@@ -41,4 +39,7 @@ async def main():
             print("pending: ", task)
 
 
-asyncio.run(main())
+for i in range(0, 10, 2):
+    names = names[i : i + 2]
+    asyncio.run(collect_results(names))
+    print("\n\n\n")
