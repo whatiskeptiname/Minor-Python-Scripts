@@ -33,17 +33,16 @@ async def collect_results(names):
             else:
                 result = await task.result().json()
                 args = task.args
-                print("Collected: ", args, "\n")
                 # print("args: " + args + "\n", result, "\n~~~~~~~~~~~~~~~")
-                data[args] = result
-                f.seek(0)
-                json.dump(data, f)
-
+                with open("data.json", "w") as f:
+                    data[args] = result
+                    json.dump(data, f)
+                print("Collected: ", args, "\n")
         for task in pending:
             print("pending: ", task)
 
 
-with open("data.json", "r+") as f:
+with open("data.json") as f:
     try:
         data = json.load(f)
         last_fetched_name = list(data)[-1]
@@ -52,6 +51,7 @@ with open("data.json", "r+") as f:
         data = {}
         index_last_fetched_name = -1
 
-    for i in range(index_last_fetched_name + 1, index_last_fetched_name + 11, 2):
-        final_names = names[i : i + 2]
-        asyncio.run(collect_results(final_names))
+
+for i in range(index_last_fetched_name + 1, index_last_fetched_name + 11, 2):
+    final_names = names[i : i + 2]
+    asyncio.run(collect_results(final_names))
