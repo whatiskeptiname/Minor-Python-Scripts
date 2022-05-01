@@ -52,6 +52,6 @@ with open("data.json", "r+") as f:
         data = {}
         index_last_fetched_name = -1
 
-    for i in range(index_last_fetched_name + 1, index_last_fetched_name + 10, 2):
+    for i in range(index_last_fetched_name + 1, index_last_fetched_name + 11, 2):
         final_names = names[i : i + 2]
         asyncio.run(collect_results(final_names))
