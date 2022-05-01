@@ -4,8 +4,10 @@ import fetch
 
 class TestMain(unittest.TestCase):
     def test_save_results(self):
-        self.assertEqual(fetch.save_results(), None)
-        self.assertEqual(fetch.save_results(), "Aarika")
+        with open("data.json", "w") as f:
+            pass
+        self.assertEqual(len(fetch.save_results()), 2)
+        self.assertEqual(len(fetch.save_results()), 4)
 
 
 if __name__ == "__main__":

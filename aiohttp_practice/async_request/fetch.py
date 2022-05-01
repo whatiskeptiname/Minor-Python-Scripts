@@ -53,10 +53,7 @@ def save_results():
             index_last_fetched_name = -1
     final_names = names[index_last_fetched_name + 1 : index_last_fetched_name + 3]
     asyncio.run(collect_results(final_names, data))
-    if index_last_fetched_name < 0:
-        return None
-    print("Last fetched name: ", last_fetched_name)
-    return last_fetched_name
+    return list(data)
 
 
 if __name__ == "__main__":
